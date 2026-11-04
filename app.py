@@ -19,7 +19,7 @@ def home():
 @app.route('/inscricao', methods=['GET', 'POST'])
 def inscricao():
     if request.method == 'POST':
-        # --- Textos simples ---
+        
         nome = request.form.get('nome', '').strip()
         email = request.form.get('email', '').strip()
         telefone = request.form.get('telefone', '').strip()
@@ -33,18 +33,18 @@ def inscricao():
         motivacao = request.form.get('motivacao', '').strip()
         evento_id = request.form.get('evento_id')
 
-        # --- Senhas (só para validar depois, NÃO vão para o dicionário) ---
+        
         senha = request.form.get('senha', '')
         confirma_senha = request.form.get('confirma_senha', '')
 
-        # --- Números (int) ---
+        
         periodo_txt = request.form.get('periodo', '')
         periodo = int(periodo_txt) if periodo_txt.isdigit() else None
 
         experiencia_txt = request.form.get('experiencia', '')
         experiencia = int(experiencia_txt) if experiencia_txt.isdigit() else None
 
-        # --- Data e idade ---
+        
         try:
             nascimento = date.fromisoformat(request.form.get('nascimento', ''))
             idade = calcular_idade(nascimento)
@@ -52,19 +52,19 @@ def inscricao():
             nascimento = None
             idade = None
 
-        # --- Listas ---
+        
         linguagens = request.form.getlist('linguagens')
         areas = request.form.getlist('areas')
 
-        # --- Booleanos (marcado -> True, desmarcado -> False) ---
+        
         aceite = request.form.get('aceite') is not None
         newsletter = request.form.get('newsletter') is not None
 
-        # --- Arquivo (só o nome) ---
+        
         foto = request.files.get('foto')
         foto_nome = foto.filename if foto and foto.filename else None
 
-        # --- Dicionário final ---
+        
         dados = {
             'nome': nome,
             'email': email,
@@ -88,7 +88,7 @@ def inscricao():
             'newsletter': newsletter,
             'evento_id': evento_id,
         }
-                # --- Validação no servidor ---
+                
         erros = []
 
         if len(nome) < 3:
@@ -120,11 +120,11 @@ def inscricao():
         if len(motivacao) > 500:
             erros.append('A motivação pode ter no máximo 500 caracteres.')
 
-        # --- Se houver erros, volta para o formulário ---
+        
         if erros:
             return render_template('inscricao.html', erros=erros, form=request.form)
 
-        # --- Sem erros ---
+    
         return render_template('confirmacao.html', dados=dados)
 
     return render_template('inscricao.html', form=request.form)
