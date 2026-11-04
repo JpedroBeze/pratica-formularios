@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Inscrição confirmada!</h1>
+
+<div class="cracha" style="border: 4px solid {{ dados.cor_cracha }}; background-color: {{ dados.cor_cracha }}22; padding: 16px; border-radius: 12px; max-width: 300px;">
+    <h2>{{ dados.nome }}</h2>
+    <p>Hackathon IFPB · {{ dados.evento_id }}</p>
+</div>
+
+<h2>Seus dados</h2>
+<dl>
+    <dt>Nome</dt>
+    <dd>{{ dados.nome }}</dd>
+
+    <dt>E-mail</dt>
+    <dd>{{ dados.email }}</dd>
+
+    <dt>Data de nascimento</dt>
+    <dd>{{ dados.nascimento.strftime('%d/%m/%Y') }}</dd>
+
+    <dt>Idade</dt>
+    <dd>{{ dados.idade }} anos</dd>
+
+    <dt>Telefone</dt>
+    <dd>{{ dados.telefone or 'Não informado' }}</dd>
+
+    <dt>Gênero</dt>
+    <dd>{{ dados.genero }}</dd>
+
+    <dt>Curso</dt>
+    <dd>{{ dados.curso }}</dd>
+
+    <dt>Período</dt>
+    <dd>{{ dados.periodo }}º</dd>
+
+    <dt>Nível de experiência</dt>
+    <dd>
+        <progress value="{{ dados.experiencia }}" max="10"></progress>
+        {{ dados.experiencia }}/10
+    </dd>
+
+    <dt>Linguagens</dt>
+    <dd>
+        <ul>
+            {% for l in dados.linguagens %}
+            <li>{{ l }}</li>
+            {% endfor %}
+        </ul>
+    </dd>
+
+    <dt>Áreas de interesse</dt>
+    <dd>
+        {% if dados.areas %}
+        <ul>
+            {% for a in dados.areas %}
+            <li>{{ a }}</li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        Nenhuma
+        {% endif %}
+    </dd>
+
+    <dt>GitHub / Portfólio</dt>
+    <dd>{{ dados.github or 'Não informado' }}</dd>
+
+    <dt>Camiseta</dt>
+    <dd>{{ dados.camiseta or 'Não informado' }}</dd>
+
+    <dt>Horário de chegada</dt>
+    <dd>{{ dados.chegada or 'Não informado' }}</dd>
+
+    <dt>Restrição alimentar</dt>
+    <dd>{{ dados.restricao or 'Não informado' }}</dd>
+
+    <dt>Foto</dt>
+    <dd>{{ dados.foto or 'Nenhuma foto enviada' }}</dd>
+
+    <dt>Motivação</dt>
+    <dd>{{ dados.motivacao or 'Não informado' }}</dd>
+
+    <dt>Newsletter</dt>
+    <dd>{% if dados.newsletter %}Sim{% else %}Não{% endif %}</dd>
+</dl>
+
+<p><a href="{{ url_for('inscricao') }}">Fazer nova inscrição</a></p>
+{% endblock %}
